@@ -45,36 +45,45 @@ export class ChatComponent implements OnInit {
       next: (existingMessages: Message[]) => {
         console.log("Messages bruts reçus :", existingMessages);
         this.messages = existingMessages.map(msg => {
+          console.log('papapapapapapapapapapapa',existingMessages);
+          
           console.log("ID de l'expéditeur du message : ", currentUserId);
           console.log('id du receveur du message : ', this.receiverUser);
 
           return {
             id: msg.id,
-            sender_id: currentUserId,
-            receiver_id: this.otherUserId,
+            sender_id: msg.sender_id,
+            receiver_id: msg.receiver_id,
             content: msg.content,
             timestamp: msg.timestamp
           }
         })
-          .filter(msg => msg !== null) as Message[];
       },
       error: error => {
         console.error('Erreur lors de la récupération des messages existants:', error);
       }
     });
 
-    // this.chatService.startPolling().subscribe({
-    //   next: newMessages => {
-    //     if (newMessages && Array.isArray(newMessages)) {
-    //       this.messages = [...this.messages, ...newMessages]
-    //     } else {
-    //       console.warn('Received unexpected data format for new messages.');
-    //     }
-    //   },
-    //   error: error => {
-    //     console.error('Erreur lors de la récupération des nouveaux messages:', error);
-    //   }
-    // });
+    // return {
+    //   id: msg.id,
+    //   sender_id: currentUserId,
+    //   receiver_id: this.otherUserId,
+    //   content: msg.content,
+    //   timestamp: msg.timestamp
+    // }
+
+    this.chatService.startPolling(this.currentUser.id, +(this.receiverUser)).subscribe({
+      next: newMessages => {
+        if (newMessages && Array.isArray(newMessages)) {
+          this.messages = [...this.messages, ...newMessages]
+        } else {
+          console.warn('Received unexpected data format for new messages.');
+        }
+      },
+      error: error => {
+        console.error('Erreur lors de la récupération des nouveaux messages:', error);
+      }
+    });
   }
 
   sendMessage(content: string, receiverId: number): void {
@@ -82,14 +91,17 @@ export class ChatComponent implements OnInit {
     const newMessage = this.messageForm.get('newMessage')?.value.trim();
     console.log(newMessage); //OK
 
-    console.log('receveur', receiverId);
-    console.log('expéditeur du massage', this.currentUser.id)
+    console.log('receveur', receiverId); //OK
+    console.log('expéditeur du massage', this.currentUser.id) //OK
 
 
 
     if (newMessage) {
-      this.messageService.sendMessage(newMessage, receiverId).subscribe(data => {
+      this.messageService.sendMessage(newMessage, this.currentUser.id ,receiverId).subscribe(data => {
+        console.log('Message envoyer correctement', data)
         this.messageForm.reset();
+      }, error =>{
+        console.error('Erreur lors du post du msg', error)
       });
     }
   }

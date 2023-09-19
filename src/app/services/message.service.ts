@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Message } from '../models/message';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -21,9 +22,9 @@ export class MessageService {
     return headers;
   }
 
-  sendMessage(content: string, receiverId: number) {
+  sendMessage(content: string, senderId:number, receiverId: number) {
     const headers = this.getHeaders();
-    const body = { content, receiverId };
+    const body = { content, senderId ,receiverId };
     return this.http.post<Message>(`${this.BASE_URL}/messages`, body, { headers });
   }
 
@@ -31,4 +32,9 @@ export class MessageService {
     const headers = this.getHeaders();
     return this.http.get<Message[]>(`${this.BASE_URL}/messages/conversation/${user1Id}/${user2Id}`, {headers});
   }
+
+  // getConversation(user1Id: number, user2Id: number): Observable<Message[]> {
+  //   const headers = this.getHeaders();
+  //   return this.http.get<Message[]>(`${this.BASE_URL}/conversation/${user1Id}/${user2Id}`, {headers});
+  // }
 }
