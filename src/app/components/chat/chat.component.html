@@ -1,0 +1,27 @@
+<div class="chat-container">
+    <div class="message-list">
+        <div class="message" *ngFor="let message of messages">
+
+            <!-- <pre>{{ message | json }}</pre> -->
+            <div *ngIf="message.sender_id=== currentUser.id" class="my-message">
+                <div>{{ message.content }}</div>
+
+                <div>{{message.timestamp | date:'HH:mm dd/MM/yyyy'}}</div>
+                <div>Message envoyer par {{message.sender_id}}</div>
+            </div>
+
+
+
+            <div *ngIf="message.sender_id!== currentUser.id" class="other-message">
+                <div>{{ message.content }}</div>
+                <div>Message envoyer par {{message.receiver_id}}</div>
+                <div> {{message.timestamp | date:'HH:mm dd/MM/yyyy '}}</div>
+
+            </div>
+        </div>
+    </div>
+    <form [formGroup]="messageForm" (ngSubmit)="sendMessage(messageForm.get('newMessage')?.value, otherUserId)">
+        <input type="text" formControlName="newMessage" placeholder="Type a message...">
+        <button type="submit">Envoyer</button>
+    </form>
+</div>

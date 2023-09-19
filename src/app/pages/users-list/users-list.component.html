@@ -1,0 +1,18 @@
+<ul>
+    <li *ngFor="let user of users" (click)="openChatModal(user)">
+        {{ user.username }}
+    </li>
+</ul>
+
+
+<ng-template #chatModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Chat avec {{selectedUser.username}}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <app-chat [otherUserId]="selectedUser['id']"></app-chat>
+    </div>
+</ng-template>
