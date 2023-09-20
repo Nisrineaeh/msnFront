@@ -30,18 +30,18 @@ export class ChatService {
   startPolling(currentUserId: number, receiverUserId: number) {
     return timer(0, this.pollingInterval).pipe(
       switchMap(() => this.getNewMessages()), // Recup du dernier message
-      tap((messages: Message[]) => {
+      tap((messages: Message) => {
         // si nvo msg maj son id 
-        if (messages.length) {
-          this.lastMessageId = messages[messages.length - 1].id;
+        if (messages) {
+          this.lastMessageId = messages.id;
         }
       })
     );
   }
 
 
-  getNewMessages(): Observable<Message[]> {
-    return this.http.get<Message[]>(`${this.bddUrl}/new/${this.lastMessageId}`, {headers: this.getHeaders()}
+  getNewMessages(): Observable<Message> {
+    return this.http.get<Message>(`${this.bddUrl}/new/${this.lastMessageId}`, { headers: this.getHeaders() }
     );
   }
 
@@ -55,18 +55,22 @@ export class ChatService {
   }
 
 
-  getUserChats(senderId: number, receiverId: number): Observable<any> {
-    const headers =   this.getHeaders();
-    return this.http.get(`${this.bddUrl}/conversation/${senderId}/${receiverId}`, {headers});
+  getUserChats(senderId: number, receiverId: number): Observable<Message[]> {
+    const headers = this.getHeaders();
+    return this.http.get<Message[]>(`${this.bddUrl}/conversation/${senderId}/${receiverId}`, { headers }).pipe(
+      tap((messages: Message[]) => {
+        this.lastMessageId = messages[messages.length - 1].id
+        console.log('jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj',this.lastMessageId);
+
+      })
+    );
   }
 
   getUsers(): Observable<User[]> {
     return this.http.get<User[]>(`http://localhost:3000/users`);
   }
 
-  getReceiverUser(id: string): Observable<User> {
-    return this.http.get<User>(`http://localhost:3000/users` + id)
-  }
+  //jai tout essayer pour la mise en page l'équipe vraiment désolé
 
 
 

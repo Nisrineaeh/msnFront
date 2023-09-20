@@ -1,0 +1,84 @@
+.message {
+  padding: 10px;
+  margin: 10px 0;
+  max-width: auto;
+}
+.my-message{
+  display: flex;
+  justify-content: right;
+  background-color: lightblue;
+  border-radius: 25px;
+  width: auto;
+}
+
+.other-message{
+  display: flex;
+  justify-content: left;
+  background-color: lightgreen;
+    border-radius: 25px;
+  width: auto;
+}
+
+
+form {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid #ddd; 
+  padding-top: 10px;
+}
+
+input[type="text"] {
+  flex-grow: 1;
+  padding: 10px;
+  margin-right: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  outline: none;
+}
+
+input[type="text"]:focus {
+  border-color: #007bff; 
+}
+
+button {
+  padding: 10px 20px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+} 
+
+/* .div.my-message{
+  display: flex;
+  justify-content: right;
+}
+
+.div.other-message{
+  display: flex;
+  justify-content: left;
+} */
+
+.send{
+  display: flex;
+  justify-content: right;
+}
+
+.receive{
+  display:flex;
+  justify-content: left;
+}
+
+div{
+  padding-right: 5px;
+  padding-left: 5px;
+}
+
+.name{
+  font-weight: bold;
+}

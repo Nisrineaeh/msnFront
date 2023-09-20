@@ -37,51 +37,31 @@ export class ChatComponent implements OnInit {
     this.loadMessages();
   }
 
+
+
   loadMessages(): void {
     const currentUserId = this.currentUser.id;
 
-
-    this.messageService.getMessagesBetweenUsers(currentUserId,+( this.receiverUser)).subscribe({
+    this.messageService.getUserChats(currentUserId, +(this.receiverUser)).subscribe({
       next: (existingMessages: Message[]) => {
         console.log("Messages bruts reçus :", existingMessages);
-        this.messages = existingMessages.map(msg => {
-          console.log('papapapapapapapapapapapa',existingMessages);
-          
-          console.log("ID de l'expéditeur du message : ", currentUserId);
-          console.log('id du receveur du message : ', this.receiverUser);
-
-          return {
-            id: msg.id,
-            sender_id: msg.sender_id,
-            receiver_id: msg.receiver_id,
-            content: msg.content,
-            timestamp: msg.timestamp
-          }
-        })
+        this.messages = existingMessages;
       },
       error: error => {
-        console.error('Erreur lors de la récupération des messages existants:', error);
+        console.error('Erreur lors de la récup des messages existants:', error);
       }
     });
-
-    // return {
-    //   id: msg.id,
-    //   sender_id: currentUserId,
-    //   receiver_id: this.otherUserId,
-    //   content: msg.content,
-    //   timestamp: msg.timestamp
-    // }
 
     this.chatService.startPolling(this.currentUser.id, +(this.receiverUser)).subscribe({
       next: newMessages => {
         if (newMessages && Array.isArray(newMessages)) {
-          this.messages = [...this.messages, ...newMessages]
+          this.messages = [...this.messages, ...newMessages];
         } else {
-          console.warn('Received unexpected data format for new messages.');
+          console.warn('Le format du messages est éclaté');
         }
       },
       error: error => {
-        console.error('Erreur lors de la récupération des nouveaux messages:', error);
+        console.error('Erreur lors de la récup des nouveaux messages:', error);
       }
     });
   }
@@ -107,7 +87,13 @@ export class ChatComponent implements OnInit {
   }
 }
 
-
+  // getUsernameById(id: number): string {
+  //   let username = '';
+  //   this.authService.getUserById(id).subscribe(user => {
+  //     username = user.username;
+  //   });
+  //   return username;
+  // }
 
 
 }

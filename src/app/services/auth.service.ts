@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { User } from '../models/user';
 import { HttpClient } from '@angular/common/http';
-import { tap } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -48,6 +48,12 @@ export class AuthService {
 
     return null;
   }
+
+  // getUserById(id: number): Observable<User> {
+  //   return this.http.get<User>(`http://localhost:3000/users/${id}`);
+  // }
+
+
 
 
 
