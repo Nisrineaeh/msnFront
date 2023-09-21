@@ -34,9 +34,11 @@ export class ChatService {
         // si nvo msg maj son id 
         if (messages) {
           this.lastMessageId = messages.id;
+          // setInterval(this.startPolling, 5000)
         }
       })
     );
+
   }
 
 

@@ -54,15 +54,6 @@ button:hover {
   background-color: #0056b3;
 } 
 
-/* .div.my-message{
-  display: flex;
-  justify-content: right;
-}
-
-.div.other-message{
-  display: flex;
-  justify-content: left;
-} */
 
 .send{
   display: flex;
@@ -75,10 +66,21 @@ button:hover {
 }
 
 div{
-  padding-right: 5px;
-  padding-left: 5px;
+  padding:5px;
 }
 
 .name{
   font-weight: bold;
+}
+
+.time{
+  font-style: italic;
+  display: flex;
+  justify-content: right;
+  font-size: 10px;
+}
+
+div.message{
+  margin: 0px;
+  padding: 0px;
 }

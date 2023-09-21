@@ -1,35 +1,43 @@
 <div class="chat-container">
-    <div class="message-list">
-        <div class="message" *ngFor="let message of messages">
-            <div class="send">
-            <!-- <pre>{{ message | json }}</pre> -->
-            <div *ngIf="message.sender_id.id === currentUser.id" class="my-message">
+  <div class="message-list">
+    <div class="message" *ngFor="let message of messages">
+      <div class="send" id="messages">
+        <!-- <pre>{{ message | json }}</pre> -->
+        <div *ngIf="message.sender_id.id === currentUser.id" class="my-message">
+          <div class="name">{{ message.sender_id.username }}</div>
+          <div>
+            {{ message.content }}
+           
+             <p class="time">{{ message.timestamp | date : "HH:mm dd/MM/yyyy" }}</p>
+          </div>
 
-                         <div class="name">{{message.sender_id.username}} :</div>
-                <div>{{ message.content }} {{message.timestamp | date:'HH:mm dd/MM/yyyy'}}</div>
-
-                <br>
-       
-            </div>
-</div>
-  <div class="receive">
-            <div *ngIf="message.sender_id.id !== currentUser.id" class="other-message">
-
-                        <div class="name">{{message.sender_id.username}} :</div>   
-                <div>{{ message.content }},{{message.timestamp | date:'HH:mm dd/MM/yyyy '}} </div>
-
-     
-
-
-            </div>
-            </div>
-<!-- JEREMY CSS - DONNEE RECUP QUE OTHER MESSAGE ?!!! -->
-
+          <br />
         </div>
+      </div>
+      <div class="receive">
+        <div
+          *ngIf="message.sender_id.id !== currentUser.id"
+          class="other-message"
+        >
+          <div class="name">{{ message.sender_id.username }}</div>
+          <div>
+            {{ message.content }}
+           <p class="time">{{message.timestamp | date : "HH:mm dd/MM/yyyy "}}</p>
+          </div>
+        </div>
+      </div>
     </div>
-    <form [formGroup]="messageForm" (ngSubmit)="sendMessage(messageForm.get('newMessage')?.value, otherUserId)">
-        <input type="text" formControlName="newMessage" placeholder="Type a message...">
-        <button type="submit">Envoyer</button>
-    </form>
+  </div>
+  <form
+    [formGroup]="messageForm"
+    (ngSubmit)="sendMessage(messageForm.get('newMessage')?.value, otherUserId)"
+  >
+    <input
+      type="text"
+      formControlName="newMessage"
+      placeholder="Type a message..."
+      id="message"
+    />
+    <button type="submit" (click)="send()">Envoyer</button>
+  </form>
 </div>
-

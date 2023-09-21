@@ -13,6 +13,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserListComponent } from './components/user-list/user-list.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ChatComponent } from './components/chat/chat.component';
+import { WebsocketService } from './services/websocket.service';
+
+
 
 @NgModule({
   declarations: [
@@ -31,8 +34,9 @@ import { ChatComponent } from './components/chat/chat.component';
     FormsModule,
     ReactiveFormsModule,
     NgbModule,
+
   ],
-  providers: [],
+  providers: [WebsocketService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

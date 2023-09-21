@@ -17,7 +17,7 @@ export class AuthService {
     return this.http.post<{ access_token: string, user_id: number }>(this.bddUrl + '/auth/login', { username, password })
       .pipe(
         tap(response => {
-          console.log(response)
+          // console.log(response)
           localStorage.setItem('access_token', response.access_token);
           if (response.user_id && Number.isFinite(response.user_id)) {
             localStorage.setItem('user_id', `${response.user_id}`);

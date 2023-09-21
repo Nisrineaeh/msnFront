@@ -45,8 +45,5 @@ export class MessageService {
     );
   }
 
-  // getConversation(user1Id: number, user2Id: number): Observable<Message[]> {
-  //   const headers = this.getHeaders();
-  //   return this.http.get<Message[]>(`${this.BASE_URL}/conversation/${user1Id}/${user2Id}`, {headers});
-  // }
+
 }
