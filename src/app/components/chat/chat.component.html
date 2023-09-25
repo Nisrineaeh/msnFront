@@ -3,7 +3,7 @@
     <div class="message" *ngFor="let message of messages">
       <div class="send" id="messages">
         <!-- <pre>{{ message | json }}</pre> -->
-        <div *ngIf="message.sender_id.id === currentUser.id" class="my-message">
+        <div *ngIf="message?.sender_id?.id === currentUser.id" class="my-message">
           <div class="name">{{ message.sender_id.username }}</div>
           <div>
             {{ message.content }}
@@ -16,7 +16,7 @@
       </div>
       <div class="receive">
         <div
-          *ngIf="message.sender_id.id !== currentUser.id"
+          *ngIf="message?.sender_id?.id !== currentUser.id"
           class="other-message"
         >
           <div class="name">{{ message.sender_id.username }}</div>
@@ -38,6 +38,6 @@
       placeholder="Type a message..."
       id="message"
     />
-    <button type="submit" (click)="send()">Envoyer</button>
+    <button type="submit" >Envoyer</button>
   </form>
 </div>

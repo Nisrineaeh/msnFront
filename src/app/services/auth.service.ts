@@ -14,11 +14,13 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   login(username: string, password: string) {
-    return this.http.post<{ access_token: string, user_id: number }>(this.bddUrl + '/auth/login', { username, password })
+    return this.http.post<{ access_token: string, user_id: number , username:string}>(this.bddUrl + '/auth/login', { username, password })
       .pipe(
         tap(response => {
           // console.log(response)
           localStorage.setItem('access_token', response.access_token);
+          localStorage.setItem('username', response.username);
+          console.log('username co stocker', response.username)
           if (response.user_id && Number.isFinite(response.user_id)) {
             localStorage.setItem('user_id', `${response.user_id}`);
             console.log('Id utilisateur stocké:', localStorage.getItem('user_id'))
@@ -49,12 +51,12 @@ export class AuthService {
     return null;
   }
 
-  // getUserById(id: number): Observable<User> {
-  //   return this.http.get<User>(`http://localhost:3000/users/${id}`);
-  // }
-
+  getCurrentUsername(): string{
+    return this.currentUser ? this.currentUser.username: 'Inconnu';
+  }
 
 
 
 
 }
+

@@ -29,7 +29,7 @@ export class ChatService {
 
   startPolling(currentUserId: number, receiverUserId: number) {
     return timer(0, this.pollingInterval).pipe(
-      switchMap(() => this.getNewMessages()), // Recup du dernier message
+      switchMap(() =>  this.getNewMessages()), // Recup du dernier message
       tap((messages: Message) => {
         // si nvo msg maj son id 
         if (messages) {
@@ -72,7 +72,9 @@ export class ChatService {
     return this.http.get<User[]>(`http://localhost:3000/users`);
   }
 
-  //jai tout essayer pour la mise en page l'équipe vraiment désolé
+  getLastMessage(afterId: number){
+    return this.http.get(`${this.bddUrl}/new/${afterId}`)
+  }
 
 
 
