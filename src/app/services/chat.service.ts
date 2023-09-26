@@ -24,28 +24,12 @@ export class ChatService {
 
 
   private lastMessageId = 0;
-  private pollingInterval = 5000; // 5sec
 
 
-  startPolling(currentUserId: number, receiverUserId: number) {
-    return timer(0, this.pollingInterval).pipe(
-      switchMap(() =>  this.getNewMessages()), // Recup du dernier message
-      tap((messages: Message) => {
-        // si nvo msg maj son id 
-        if (messages) {
-          this.lastMessageId = messages.id;
-          // setInterval(this.startPolling, 5000)
-        }
-      })
-    );
-
-  }
-
-
-  getNewMessages(): Observable<Message> {
-    return this.http.get<Message>(`${this.bddUrl}/new/${this.lastMessageId}`, { headers: this.getHeaders() }
-    );
-  }
+  // getNewMessages(): Observable<Message> {
+  //   return this.http.get<Message>(`${this.bddUrl}/new/${this.lastMessageId}`, { headers: this.getHeaders() }
+  //   );
+  // }
 
   private getHeaders(): HttpHeaders {
     const token = localStorage.getItem('access_token');
@@ -72,9 +56,9 @@ export class ChatService {
     return this.http.get<User[]>(`http://localhost:3000/users`);
   }
 
-  getLastMessage(afterId: number){
-    return this.http.get(`${this.bddUrl}/new/${afterId}`)
-  }
+  // getLastMessage(afterId: number){
+  //   return this.http.get(`${this.bddUrl}/new/${afterId}`)
+  // }
 
 
 

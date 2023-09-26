@@ -8,15 +8,17 @@ import { Message } from '../models/message';
   providedIn: 'root'
 })
 export class WebsocketService {
- private socket: Socket;
+  private socket: Socket;
 
 
-  constructor() { 
-    this.socket = io('ws://localhost:3000/')  
+  constructor() {
+    this.socket = io('ws://localhost:3000/')
   }
 
 
   listen(eventName: string) {
+    console.log("listen");
+
     return new Observable((subscriber) => {
       this.socket.on(eventName, (data: any) => {
         subscriber.next(data);
@@ -28,25 +30,6 @@ export class WebsocketService {
     this.socket.emit(eventName, data);
   }
 
-  sendMessage(message: Message) {
-    this.socket.emit('sendMessage', message);
-  }
 
-  getMessages() {
-    return new Observable<Message>((observer) => {
-      this.socket.on('newMessage', (message: Message) => {
-        observer.next(message);
-      });
-
-    });
-  }
-
-  receiveMessage(): Observable<Message> {
-    return new Observable((observer) => {
-      this.socket.on('messageToClient', (message: Message) => {
-        observer.next(message);
-      });
-    });
-  }
 
 }

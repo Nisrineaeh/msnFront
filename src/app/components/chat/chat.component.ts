@@ -30,6 +30,7 @@ export class ChatComponent implements OnInit {
     private chatService: ChatService,
     private ws: WebsocketService,
     private cdr: ChangeDetectorRef, //detecte changement rapidement mais 0
+
   ) {
     this.messageForm = this.fb.group({
       newMessage: ['', Validators.required]
@@ -60,13 +61,15 @@ export class ChatComponent implements OnInit {
       }
     });
 
+    console.log('listen to websocket');
+    
     this.ws.listen('msgToClient').subscribe((data: any) => {
       console.log("Data recu :", data);
 
       if (data && 'sender_id' in data && 'receiver_id' in data && 'content' in data && 'timestamp' in data) {
         const newMessage: Message = {
           id: 0,
-          username: data.username || 'Inconnu',
+          username: data.username,
           sender_id: data.sender_id,
           receiver_id: data.receiver_id,
           content: data.content,
@@ -74,7 +77,6 @@ export class ChatComponent implements OnInit {
         };
 
         this.messages.push(newMessage);
-
       }
     });
 
