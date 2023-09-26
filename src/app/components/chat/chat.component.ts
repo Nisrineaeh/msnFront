@@ -66,7 +66,7 @@ export class ChatComponent implements OnInit {
     this.ws.listen('msgToClient').subscribe((data: any) => {
       console.log("Data recu :", data);
 
-      if (data && 'sender_id' in data && 'receiver_id' in data && 'content' in data && 'timestamp' in data) {
+      if (typeof data === 'object' && 'sender_id' in data && 'receiver_id' in data && 'content' in data && 'timestamp' in data) {
         const newMessage: Message = {
           id: 0,
           username: data.username,
@@ -120,7 +120,7 @@ export class ChatComponent implements OnInit {
           timestamp: new Date()
         };
 
-        // this.messages.push(newMessage);
+        this.messages.push(newMessage);
         this.ws.emit('msgToServer', newMessage);  
       }
     }

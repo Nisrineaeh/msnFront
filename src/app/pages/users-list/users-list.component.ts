@@ -32,7 +32,7 @@ export class UsersListComponent {
     this.selectedUser = user;
     console.log('selectIUsercote controlleur ', this.selectedUser);
     localStorage.setItem('receiverId', (user.id).toString())
-    localStorage.setItem('receiverUsername', user.username);///////////////////////
+    localStorage.setItem('receiverUsername', user.username);
     this.modalService.open(this.chatModal, { size: 'lg' });
   }
 

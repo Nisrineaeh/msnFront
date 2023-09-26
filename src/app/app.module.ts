@@ -14,6 +14,7 @@ import { UserListComponent } from './components/user-list/user-list.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ChatComponent } from './components/chat/chat.component';
 import { WebsocketService } from './services/websocket.service';
+import { SocketIoModule } from 'ngx-socket-io';
 
 
 
@@ -34,6 +35,7 @@ import { WebsocketService } from './services/websocket.service';
     FormsModule,
     ReactiveFormsModule,
     NgbModule,
+    SocketIoModule.forRoot({ url: 'http://localhost:3000', options: {} }),
 
   ],
   providers: [WebsocketService],
